@@ -15,15 +15,13 @@ logger = logging.getLogger(__name__)
 
 
 class RegisterSchema(BaseModel):
-
     username: str
     email: str
-    name: str
     password: str
-    phone_number: str
+    name: str
     birth: str
     sex: Sex
-
+    phone_number: str
     # phone number validation
 
     # @validator("phone_number")

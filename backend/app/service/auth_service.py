@@ -28,7 +28,7 @@ class AuthService:
         _users_id = str(uuid4())
 
         # mapping request data to class entity table
-        _person = Person(id=_person_id, name=register.password, birth=register.birth, sex=register.sex,
+        _person = Person(id=_person_id, name=register.name, birth=register.birth, sex=register.sex,
                         phone_number=register.phone_number)
 
         _users = Users(id=_users_id, username=register.username, email=register.email,
