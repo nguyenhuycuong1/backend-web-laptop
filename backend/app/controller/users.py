@@ -8,7 +8,7 @@ from app.service.users import UserService
 router = APIRouter(
     prefix="/users",
     tags=['user'],
-    dependencies=[Depends(JWTBearer())]
+    # dependencies=[Depends(JWTBearer())]
 )
 
 # @router.get("/", response_model=ResponseSchema, response_model_exclude_none=True)
@@ -18,6 +18,6 @@ router = APIRouter(
 #     return ResponseSchema(detail="Successfully fetch data!", result=result)
 
 @router.get("/", response_model=ResponseSchema, response_model_exclude_none=True)
-async def get_user_profile():
-    result = await UserService.get_user_profile()
+async def get_user_profile(username: str):
+    result = await UserService.get_user_profile(username)
     return ResponseSchema(detail="Successfully fetch data!", result=result)
