@@ -10,4 +10,4 @@ class Role(SQLModel,TimeMixin, table=True):
     id: Optional[str] = Field(None,primary_key=True, nullable=True)
     role_name: str
 
-    users: List["Users"] = Relationship(back_populates="roles", link_model=UsersRole)
+    user: List["User"] = Relationship(back_populates="role", link_model=UsersRole)

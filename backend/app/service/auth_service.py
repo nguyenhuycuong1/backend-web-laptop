@@ -4,13 +4,13 @@ from uuid import uuid4
 from fastapi import HTTPException
 
 from passlib.context import CryptContext
-from app.schema import RegisterSchema
-from app.model import Person, Users, UsersRole, Role
+from app.schema.schema import RegisterSchema
+from app.model import Person, User, UsersRole, Role
 from app.repository.role import RoleRepository
 from app.repository.users import UsersRepository
 from app.repository.person import PersonRepository
 from app.repository.user_role import UsersRoleRepository
-from app.schema import LoginSchema, ForgotPasswordSchema
+from app.schema.schema import LoginSchema, ForgotPasswordSchema
 from app.repository.auth_repo import JWTRepo
 
 
@@ -31,7 +31,7 @@ class AuthService:
         _person = Person(id=_person_id, name=register.name, birth=register.birth, sex=register.sex,
                         phone_number=register.phone_number)
 
-        _users = Users(id=_users_id, username=register.username, email=register.email,
+        _users = User(id=_users_id, username=register.username, email=register.email,
                        password=pwd_context.hash(register.password),
                        person_id=_person_id)
 
@@ -76,7 +76,7 @@ class AuthService:
         await UsersRepository.update_password(forgot_password.email, pwd_context.hash(forgot_password.new_password))
 
     @staticmethod
-    async def get_user_by_credentials(username: str, password: str) -> Users:
+    async def get_user_by_credentials(username: str, password: str) -> User:
         user = await UsersRepository.find_by_username(username)
         if user is not None:
             if pwd_context.verify(password, user.password):
