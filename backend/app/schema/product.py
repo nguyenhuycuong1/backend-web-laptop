@@ -8,7 +8,7 @@ class ProductBase(BaseModel):
 class ProductCreateRequest(ProductBase):
     product_name: str
     description: str
-    price: str
+    price: float
     image: str
 
 class ProductUpdateRequest(ProductBase):
@@ -17,12 +17,12 @@ class ProductUpdateRequest(ProductBase):
 class ProductItemResponse(ProductBase):
     product_name: str
     description: str
-    price: str
+    price: float
     image: str
 
 class ProductListResponse(BaseModel):
     product_id: str
     product_name: str
     description: str
-    price: str
+    price: float
     image: str

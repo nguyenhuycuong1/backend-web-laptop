@@ -5,7 +5,7 @@ from app.config import db
 from app.service.auth_service import generate_role
 
 origins= [
-    "http://localhost:3000"
+    "http://localhost:3001"
 ]
 
 def init_app():
