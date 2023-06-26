@@ -8,10 +8,17 @@ from app.schema.cart_product import CartProductCreateRequest, CartProductRespons
 
 router = APIRouter(prefix="", tags=["Cart Product"])
 
-@router.post("/cartproduct", response_model=CartProductResponse)
+@router.post("/addtocard", response_model=CartProductResponse)
 async def create_product(cartproduct_data: CartProductCreateRequest):
     cartproduct = CartProduct(**cartproduct_data.dict())
     db.session.add(cartproduct)
     await commit_rollback()
     await db.session.refresh(cartproduct)
     return cartproduct
+
+@router.get("/carts", response_model=List[CartProductResponse])
+async def carts():
+    query = select(CartProduct)
+    result = await db.session.execute(query)
+    carts = result.scalars().all()
+    return carts

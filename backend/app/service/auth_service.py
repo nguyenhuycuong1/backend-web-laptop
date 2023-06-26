@@ -45,7 +45,6 @@ class AuthService:
         )
 
         _cart = Cart(cart_id=_cart_id, user_id=_users_id)
-
         # Everyone who registers through our registration page makes the default as a user
         _role = await RoleRepository.find_by_role_name("user")
         _users_role = UsersRole(users_id=_users_id, role_id=_role.id)
