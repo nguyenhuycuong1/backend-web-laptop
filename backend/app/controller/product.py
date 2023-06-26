@@ -8,7 +8,7 @@ from app.schema.product import ProductCreateRequest, ProductItemResponse, Produc
 
 router = APIRouter(prefix="", tags=["Product"])
 
-@router.post("/products", response_model=ProductItemResponse)
+@router.post("/product", response_model=ProductItemResponse)
 async def create_product(product_data: ProductCreateRequest):
     product = Product(**product_data.dict())
     db.session.add(product)
@@ -26,7 +26,7 @@ async def get_product(product_id: str):
     return product
 
 
-@router.get("/product", response_model=List[ProductListResponse])
+@router.get("/products", response_model=List[ProductListResponse])
 async def list_products():
     query = select(Product)
     result = await db.session.execute(query)

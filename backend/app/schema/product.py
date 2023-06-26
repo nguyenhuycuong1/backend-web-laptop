@@ -4,7 +4,6 @@ from typing import Optional
 
 class ProductBase(BaseModel):
     product_id: str
-    order_status: str
 
 class ProductCreateRequest(ProductBase):
     product_name: str
@@ -16,7 +15,10 @@ class ProductUpdateRequest(ProductBase):
     pass
 
 class ProductItemResponse(ProductBase):
-    order_date: datetime
+    product_name: str
+    description: str
+    price: str
+    image: str
 
 class ProductListResponse(BaseModel):
     product_id: str

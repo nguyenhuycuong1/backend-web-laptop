@@ -34,11 +34,12 @@ def init_app():
     async def shutdown():
         await db.close()
 
-    from app.controller import authentication, users, product
+    from app.controller import authentication, users, product, brand
 
     app.include_router(authentication.router)
     app.include_router(users.router)
     app.include_router(product.router)
+    app.include_router(brand.router)
 
     return app
 
