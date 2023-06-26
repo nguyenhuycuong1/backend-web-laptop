@@ -5,7 +5,7 @@ from app.config import db
 from app.service.auth_service import generate_role
 
 origins= [
-    "http://localhost:3001"
+    "http://localhost:3000"
 ]
 
 def init_app():
@@ -34,12 +34,14 @@ def init_app():
     async def shutdown():
         await db.close()
 
-    from app.controller import authentication, users, product, brand
+    from app.controller import authentication, users, product, brand, cart_product, cart
 
     app.include_router(authentication.router)
     app.include_router(users.router)
     app.include_router(product.router)
     app.include_router(brand.router)
+    app.include_router(cart.router)
+    app.include_router(cart_product.router)
 
     return app
 

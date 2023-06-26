@@ -12,7 +12,6 @@ class Cart(SQLModel, TimeMixin, table=True):
     __tablename__ = "cart"
 
     cart_id: Optional[str] = Field(None, primary_key=True, nullable=False)
-    cart_status: str = Field(sa_column=Column("cart_status", String))
 
     user_id: Optional[str] = Field(default=None, foreign_key="user.id", unique=True)
     user: Optional["User"] = Relationship(back_populates="cart")

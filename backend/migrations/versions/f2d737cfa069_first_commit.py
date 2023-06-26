@@ -1,8 +1,8 @@
 """first commit
 
-Revision ID: ee1e72bd5a01
+Revision ID: f2d737cfa069
 Revises: 
-Create Date: 2023-06-26 21:42:43.421930
+Create Date: 2023-06-26 23:33:51.479497
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision = 'ee1e72bd5a01'
+revision = 'f2d737cfa069'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -70,7 +70,6 @@ def upgrade() -> None:
     )
     op.create_table('cart',
     sa.Column('modified_at', sa.DateTime(), nullable=False),
-    sa.Column('cart_status', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('cart_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('user_id', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
@@ -97,7 +96,7 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('users_id', 'role_id')
     )
     op.create_table('cart_product',
-    sa.Column('payment', sa.Integer(), nullable=True),
+    sa.Column('quantity', sa.Integer(), nullable=True),
     sa.Column('cart_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('product_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.ForeignKeyConstraint(['cart_id'], ['cart.cart_id'], ),

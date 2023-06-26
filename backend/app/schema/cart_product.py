@@ -1,0 +1,15 @@
+from pydantic import BaseModel
+
+
+class CartProductBase(BaseModel):
+    cart_id: str
+
+
+class CartProductCreateRequest(CartProductBase):
+    quantity: int
+    product_id: str
+
+
+class CartProductResponse(CartProductBase):
+    quantity: int
+    product_id: str

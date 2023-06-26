@@ -11,4 +11,4 @@ class CartProduct(SQLModel, table=True):
         None, foreign_key="product.product_id", primary_key=True
     )
 
-    quanlity: int = Field(sa_column=Column("payment", Integer))
+    quantity: int = Field(sa_column=Column("quantity", Integer))
