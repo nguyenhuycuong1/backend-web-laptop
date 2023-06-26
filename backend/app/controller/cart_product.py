@@ -8,8 +8,8 @@ from app.schema.cart_product import CartProductCreateRequest, CartProductRespons
 
 router = APIRouter(prefix="", tags=["Cart Product"])
 
-@router.post("/addtocard", response_model=CartProductResponse)
-async def create_product(cartproduct_data: CartProductCreateRequest):
+@router.post("/addtocart", response_model=CartProductResponse)
+async def addtocart(cartproduct_data: CartProductCreateRequest):
     cartproduct = CartProduct(**cartproduct_data.dict())
     db.session.add(cartproduct)
     await commit_rollback()
