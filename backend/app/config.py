@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlmodel import SQLModel
 
-DB_CONFIG = f"postgresql+asyncpg://fastapi:1@localhost:5432/db_web_sell_laptop1"
+DB_CONFIG = f"postgresql+asyncpg://fastapi:1@localhost:5432/db_web_demo"
 SECRET_KEY = "nxh2803"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30

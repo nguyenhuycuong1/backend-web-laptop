@@ -12,9 +12,6 @@ class Product(SQLModel, table=True):
     description: str = Field(sa_column=Column("description", String))
     price: str = Field(sa_column=Column("price", String))
     image: str = Field(sa_column=Column("image", String))
-
-    order_date: datetime = Field(default_factory=datetime.now)
-    order_status: str = Field(sa_column=Column("order_status", String))
     
     brand_id: Optional[str] = Field(default=None, foreign_key="brand.brand_id")
     brand: Optional["Brand"] = Relationship(back_populates="product")
