@@ -33,7 +33,6 @@ async def list_products():
     products = result.scalars().all()
     return products
 
-
 @router.put("/product/{product_id}", response_model=ProductItemResponse)
 async def update_product(product_id: str, product_data: ProductUpdateRequest):
     query = select(Product).where(Product.product_id == product_id)
@@ -47,7 +46,6 @@ async def update_product(product_id: str, product_data: ProductUpdateRequest):
     await db.session.refresh(product)
     return product
 
-
 @router.delete("/product/{product_id}")
 async def delete_product(product_id: str):
     query = select(Product).where(Product.product_id == product_id)
@@ -58,3 +56,13 @@ async def delete_product(product_id: str):
     db.session.delete(product)
     await commit_rollback()
     return {"message": "Product deleted successfully"}
+
+@router.get("/products/orderby/{options}", response_model=List[ProductListResponse])
+async def List_products_orderBy(options: str):
+    if(options == "desc"):
+        query = select(Product).order_by(Product.price.desc())    
+    elif(options == "asc"):
+        query = select(Product).order_by(Product.price.asc())            
+    result = await db.session.execute(query)
+    products = result.scalars().all()
+    return products
