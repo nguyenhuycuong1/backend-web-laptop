@@ -61,7 +61,7 @@ async def update_cart_product(
 
 
 @router.delete("/deletefromcart/{cart_id}/{product_id}")
-async def remove_from_cart(cart_id: UUID, product_id: str):
+async def delete_from_cart(cart_id: UUID, product_id: str):
     try:
         cartproduct = await check_existing_cart_product(str(cart_id), str(product_id))
         if not cartproduct:
