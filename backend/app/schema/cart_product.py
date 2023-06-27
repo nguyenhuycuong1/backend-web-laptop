@@ -13,3 +13,6 @@ class CartProductRequest(CartProductBase):
 class CartProductResponse(CartProductBase):
     quantity: int
     product_id: str
+    
+class UpdateCartProduct(BaseModel):
+    quantity: int
