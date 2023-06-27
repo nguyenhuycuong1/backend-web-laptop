@@ -44,8 +44,8 @@ async def carts():
     return carts
 
 
-@router.put("/updatecart/{cart_id}/{product_id}")
-async def update_cart_product(
+@router.put("/updatefromcart/{cart_id}/{product_id}")
+async def update_from_cart(
     cart_id: UUID, product_id: int, cartproduct_data: UpdateCartProduct
 ):
     try:
