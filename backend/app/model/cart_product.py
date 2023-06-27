@@ -12,3 +12,5 @@ class CartProduct(SQLModel, table=True):
     )
 
     quantity: int = Field(sa_column=Column("quantity", Integer))
+
+

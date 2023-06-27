@@ -21,3 +21,4 @@ router = APIRouter(
 async def get_user_profile(username: str):
     result = await UserService.get_user_profile(username)
     return ResponseSchema(detail="Successfully fetch data!", result=result)
+

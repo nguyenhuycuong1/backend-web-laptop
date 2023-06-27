@@ -25,7 +25,7 @@ class AuthService:
         # Create uuid
         _person_id = str(uuid4())
         _users_id = str(uuid4())
-        _cart_id = str(_users_id)
+        _cart_id = str(uuid4())
 
         # mapping request data to class entity table
         _person = Person(

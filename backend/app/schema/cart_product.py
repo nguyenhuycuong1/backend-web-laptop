@@ -5,7 +5,7 @@ class CartProductBase(BaseModel):
     cart_id: str
 
 
-class CartProductCreateRequest(CartProductBase):
+class CartProductRequest(CartProductBase):
     quantity: int
     product_id: str
 

@@ -14,3 +14,8 @@ class UserService:
                        Person.sex,
                        Person.phone_number).join_from(User, Person).where(User.username == username)
         return(await db.execute(query)).mappings().one()
+    
+    @staticmethod
+    async def delete_all_users():
+        await db.execute(User.__table__.delete())
+        await db.execute(Person.__table__.delete())
