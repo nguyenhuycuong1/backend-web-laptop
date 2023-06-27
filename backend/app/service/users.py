@@ -1,6 +1,7 @@
 from sqlalchemy.future import select
 from app.model import User, Person
 from app.config import db
+from uuid import UUID
 
 class UserService:
     

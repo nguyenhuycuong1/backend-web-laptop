@@ -45,7 +45,7 @@ class RegisterSchema(BaseModel):
 class LoginSchema(BaseModel):
     username: str
     password: str
-
+    role: Optional[str] = None
 
 class ForgotPasswordSchema(BaseModel):
     email: str

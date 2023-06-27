@@ -1,6 +1,4 @@
 from .user import User
-from .user_role import UsersRole
-from .role import Role
 from .person import Person
 from .mixins import TimeMixin
 from .brand import Brand
