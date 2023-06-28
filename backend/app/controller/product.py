@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, Security, HTTPException, Path, Query
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.future import select
+from sqlalchemy import or_
+from sqlalchemy.sql import func
 from typing import List
 from app.model.product import Product
 from app.config import db, commit_rollback
@@ -81,6 +83,18 @@ async def List_products_orderBy(options: str):
 @router.get("/products/{options}", response_model=List[ProductListResponse])
 async def List_products_orderBy(options: str):
     query = select(Product).where(Product.brand_id == options)
+    result = await db.session.execute(query)
+    products = result.scalars().all()
+    return products
+
+@router.get("/products/search/{name}", response_model=List[ProductListResponse])
+async def search_products_by_name(name: str):
+    query = select(Product).where(
+    or_(
+            Product.product_name.ilike(f"%{name}%"),
+            Product.description.ilike(f"%{name}%")
+        )
+    )
     result = await db.session.execute(query)
     products = result.scalars().all()
     return products
