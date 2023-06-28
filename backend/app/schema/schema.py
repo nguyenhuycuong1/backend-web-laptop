@@ -41,6 +41,13 @@ class RegisterSchema(BaseModel):
             raise HTTPException(status_code=400, detail="Invalid input sex")
         return v
 
+class UserSchema(BaseModel):
+    email: str
+    password: str
+    name: str
+    birth: str
+    sex: Sex
+    phone_number: str
 
 class LoginSchema(BaseModel):
     username: str

@@ -86,10 +86,20 @@ class AuthService:
             forgot_password.email, pwd_context.hash(forgot_password.new_password)
         )
 
+    # @staticmethod
+    # async def get_user_by_credentials(username: str, password: str, role: Optional[str]) -> User:
+    #     user = await UsersRepository.find_by_username(username)
+    #     if user is not None:
+    #         if pwd_context.verify(password, user.password):
+    #             return user
+    #     raise HTTPException(status_code=401, detail="Invalid credentials")
+    
     @staticmethod
     async def get_user_by_credentials(username: str, password: str, role: Optional[str]) -> User:
         user = await UsersRepository.find_by_username(username)
         if user is not None:
             if pwd_context.verify(password, user.password):
+                if role is not None:
+                    user.role = role
                 return user
         raise HTTPException(status_code=401, detail="Invalid credentials")

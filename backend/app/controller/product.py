@@ -64,7 +64,7 @@ async def delete_product(product_id: str):
     product = result.scalars().first()
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
-    db.session.delete(product)
+    await db.session.delete(product)
     await commit_rollback()
     return {"message": "Product deleted successfully"}
 
