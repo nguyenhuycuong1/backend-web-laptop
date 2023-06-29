@@ -49,6 +49,12 @@ class UserSchema(BaseModel):
     sex: Sex
     phone_number: str
 
+class UserRegisterSchema(BaseModel):
+    username: str
+    email: str
+    password: str
+    role: str
+
 class LoginSchema(BaseModel):
     username: str
     password: str

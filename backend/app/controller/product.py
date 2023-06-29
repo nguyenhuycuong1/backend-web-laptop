@@ -91,8 +91,7 @@ async def List_products_orderBy(options: str):
 async def search_products_by_name(name: str):
     query = select(Product).where(
     or_(
-            Product.product_name.ilike(f"%{name}%"),
-            Product.description.ilike(f"%{name}%")
+            Product.product_name.ilike(f"%{name}%")
         )
     )
     result = await db.session.execute(query)

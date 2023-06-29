@@ -17,6 +17,17 @@ async def cart():
     cart = result.scalars().all()
     return cart
 
+
+@router.get("/cart/{user_id}", response_model=CartResponse)
+async def cart_by_id(user_id: str):
+    query = select(Cart).where(Cart.user_id == user_id)
+    result = await db.session.execute(query)
+    cart = result.scalars().first()
+    if not cart:
+        raise HTTPException(status_code=404, detail="Cart not found")
+    return cart
+
+
 @router.delete("/cart", status_code=204)
 async def delete_all_carts():
     try:

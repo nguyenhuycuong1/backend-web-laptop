@@ -37,12 +37,3 @@ class UserService:
             Person.phone_number,
         ).join_from(User, Person)
         return (await db.execute(query)).mappings().all()
-
-    @staticmethod
-    async def delete_user(username: str, db: Session):
-        user = await db.get(User, username)
-
-        if user:
-            async with db.begin():
-                db.delete(user)
-            await db.flush()
