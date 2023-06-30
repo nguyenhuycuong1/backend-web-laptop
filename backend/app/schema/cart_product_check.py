@@ -6,15 +6,19 @@ class CartProductCheckBase(BaseModel):
     cart_product_check_id: Optional[str] = None
 
 
-class CartProductRequest(BaseModel):
+class CartProductCheckRequest(BaseModel):
     product_id: str
     cart_id: str
     quantity: int
 
 
-class CartProductResponse(CartProductCheckBase):
+class CartProductCheckResponse(CartProductCheckBase):
     product_id: str
     cart_id: str
     quantity: int
 
+class CartProductCheckItemResponse(BaseModel):
+    product_id: str
+    cart_id: str
+    quantity: int
     

@@ -3,12 +3,15 @@ from sqlalchemy import Column, String, Float
 from datetime import datetime
 from sqlmodel import SQLModel, Field, Relationship
 from sqlalchemy import ForeignKey
+import uuid
 
 
 class Order(SQLModel, table=True):
     __tablename__ = "order"
 
-    order_id: Optional[str] = Field(None, primary_key=True, nullable=False)
+    order_id: Optional[str] = Field(
+        default_factory=lambda: str(uuid.uuid4()), primary_key=True
+    )
     order_date: datetime = Field(default_factory=datetime.now)
     order_status: str = Field(sa_column=Column("order_status", String))
     payment_method: str = Field(sa_column=Column("payment", String))
