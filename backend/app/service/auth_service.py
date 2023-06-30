@@ -95,7 +95,7 @@ class AuthService:
     #     raise HTTPException(status_code=401, detail="Invalid credentials")
     
     @staticmethod
-    async def get_user_by_credentials(username: str, password: str, role: Optional[str]) -> User:
+    async def get_user_by_credentials(id: Optional[str], username: str, password: str, role: Optional[str]) -> User:
         user = await UsersRepository.find_by_username(username)
         if user is not None:
             if pwd_context.verify(password, user.password):

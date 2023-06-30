@@ -8,7 +8,7 @@ from sqlalchemy import false
 from app.model.person import Sex
 
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 # get root logger
 logger = logging.getLogger(__name__)
@@ -41,6 +41,7 @@ class RegisterSchema(BaseModel):
             raise HTTPException(status_code=400, detail="Invalid input sex")
         return v
 
+
 class UserSchema(BaseModel):
     email: str
     password: str
@@ -49,16 +50,20 @@ class UserSchema(BaseModel):
     sex: Sex
     phone_number: str
 
+
 class UserRegisterSchema(BaseModel):
     username: str
     email: str
     password: str
     role: str
 
+
 class LoginSchema(BaseModel):
+    id: Optional[str] = None
     username: str
     password: str
     role: Optional[str] = None
+
 
 class ForgotPasswordSchema(BaseModel):
     email: str

@@ -78,6 +78,15 @@ async def delete_from_cart(cart_id: UUID, product_id: str):
     except SQLAlchemyError as e:
         raise HTTPException(status_code=500, detail="Internal server error")
 
+@router.get("/cartByCartId/{cart_id}", response_model=List[CartProductResponse])
+async def cartproduct_by_productId(cart_id: str):
+    query = select(CartProduct).where(CartProduct.cart_id == cart_id)
+    result = await db.session.execute(query)
+    cartproduct = result.scalars().all()
+    if not cartproduct:
+        raise HTTPException(status_code=404, detail="Cart product not found")
+    return cartproduct
+
 
 async def check_existing_cart_product(cart_id: str, product_id: str):
     query = select(CartProduct).filter(

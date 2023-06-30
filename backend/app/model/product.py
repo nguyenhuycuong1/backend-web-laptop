@@ -17,3 +17,7 @@ class Product(SQLModel, table=True):
     brand: Optional["Brand"] = Relationship(back_populates="product")
     
     cart: List["Cart"] = Relationship(back_populates="product", link_model=CartProduct)
+    
+    cart_product_check: List["CartProductCheck"] = Relationship(
+        back_populates="product"
+    )
