@@ -15,13 +15,20 @@ from app.schema.cart_product_check import (
 router = APIRouter(prefix="", tags=["CartProductCheck"])
 
 
-@router.post("/cart_product_check", response_model=CartProductCheckResponse)
-async def create_cart_product_check(product_data: CartProductCheckRequest):
-    cart_product_check = CartProductCheck(**product_data.dict())
-    db.session.add(cart_product_check)
+@router.post("/cart_product_check", response_model=List[CartProductCheckResponse])
+async def create_cart_product_check(product_data: List[CartProductCheckRequest]):
+    cart_product_checks = []
+    for data in product_data:
+        cart_product_check = CartProductCheck(**data.dict())
+        db.session.add(cart_product_check)
+        cart_product_checks.append(cart_product_check)
+    
     await commit_rollback()
-    await db.session.refresh(cart_product_check)
-    return cart_product_check
+    
+    for cart_product_check in cart_product_checks:
+        await db.session.refresh(cart_product_check)
+    
+    return cart_product_checks
 
 @router.get("/cart_product_check/{cart_product_check_id}", response_model=CartProductCheckItemResponse)
 async def get_cart_product_check(cart_product_check_id: str):
