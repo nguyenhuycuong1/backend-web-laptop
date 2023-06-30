@@ -18,7 +18,3 @@ class Cart(SQLModel, TimeMixin, table=True):
     product: List["Product"] = Relationship(
         back_populates="cart", link_model=CartProduct
     )
-
-    cart_product_check: List["CartProductCheck"] = Relationship(
-        back_populates="cart"
-    )

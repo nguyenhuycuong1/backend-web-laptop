@@ -11,10 +11,14 @@ class ProductCreateRequest(ProductBase):
     description: str
     price: float
     image: str
+    brand_id: str
 
 
-class ProductUpdateRequest(ProductBase):
-    pass
+class ProductUpdateRequest(BaseModel):
+    product_name: str
+    description: str
+    price: float
+    image: str
 
 
 class ProductItemResponse(ProductBase):

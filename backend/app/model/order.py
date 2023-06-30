@@ -17,15 +17,6 @@ class Order(SQLModel, table=True):
     payment_method: str = Field(sa_column=Column("payment", String))
     address: str = Field(sa_column=Column("address", String))
     total_amount: float = Field(sa_column=Column("total_amount", Float))
-
-    cart_product_check_id: str = Field(
-        sa_column=Column(
-            "cart_product_check_id",
-            String,
-            ForeignKey("cart_product_check.cart_product_check_id"),
-            unique=True,
-        )
-    )
     user_id: str = Field(
         sa_column=Column(
             "user_id",
@@ -34,5 +25,4 @@ class Order(SQLModel, table=True):
             unique=True,
         )
     )
-    cart_product_check: "CartProductCheck" = Relationship(back_populates="order")
     user: Optional["User"] = Relationship(back_populates="order")

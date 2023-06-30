@@ -32,7 +32,7 @@ def init_app():
     async def shutdown():
         await db.close()
 
-    from app.controller import authentication, users, product, brand, cart_product, cart, cart_product_check, order
+    from app.controller import authentication, users, product, brand, cart_product, cart,  order
 
     app.include_router(authentication.router)
     app.include_router(users.router)
@@ -40,7 +40,6 @@ def init_app():
     app.include_router(brand.router)
     app.include_router(cart.router)
     app.include_router(cart_product.router)
-    app.include_router(cart_product_check.router)
     app.include_router(order.router)
 
     return app
