@@ -8,17 +8,14 @@ class OrderBase(BaseModel):
     order_id: Optional[str] = None
 
 class OrderResponse(OrderBase):
-    product_id: str
-    quantity: int
-    cart_id: str
-    total_amount: float
+    order_id_auto_generated: str
+    order_id: str
     
 class OrderRequest(BaseModel):
     # order_date: datetime = datetime.now().replace(tzinfo=None)
     product_id: str
     quantity: int
     cart_id: str
-    total_amount: float
 
 class ResponseSchema(BaseModel):
     detail: str
