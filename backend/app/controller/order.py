@@ -3,7 +3,14 @@ from app.model.order import Order
 from sqlalchemy.future import select
 from app.config import db, commit_rollback
 from typing import List
-from app.schema.order import OrderBase, OrderRequest, OrderResponse, ResponseSchema, OrderItemResponse, OrderSearchParams
+from app.schema.order import (
+    OrderBase,
+    OrderRequest,
+    OrderResponse,
+    ResponseSchema,
+    OrderItemResponse,
+    OrderSearchParams,
+)
 import uuid
 
 router = APIRouter(prefix="", tags=["Order"])
@@ -25,13 +32,9 @@ async def create_order(product_data: List[OrderRequest]):
     for order in orders:
         await db.session.refresh(order)
 
-    return [
-        OrderResponse(
-            order_id=order.order_id
-        )
-        for order in orders
-    ]
-    
+    return [OrderResponse(order_id=order.order_id) for order in orders]
+
+
 @router.get("/order/{order_id}", response_model=List[OrderItemResponse])
 async def get_order_by_id(order_id: str):
     query = select(Order).where(Order.order_id == order_id)
@@ -42,3 +45,18 @@ async def get_order_by_id(order_id: str):
         return order
     else:
         raise HTTPException(status_code=404, detail="Order not found")
+
+
+@router.delete("/order/{order_id}")
+async def delete_order(order_id: str):
+    query = select(Order).where(Order.order_id == order_id)
+    result = await db.session.execute(query)
+    orders = result.scalars().all()
+
+    if not orders:
+        raise HTTPException(status_code=404, detail="Order not found")
+
+    for order in orders:
+        await db.session.delete(order)
+        await commit_rollback()
+    return {"message": "Order deleted successfully"}
