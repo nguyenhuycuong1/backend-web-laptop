@@ -8,15 +8,16 @@ class InvoiceBase(BaseModel):
     invoice_id: Optional[str] = None
 
 class InvoiceResponse(InvoiceBase):
-    order_date: datetime
+    order_date: datetime = datetime.now().replace(tzinfo=None)
     order_status: str
     payment_method: str
+    total_amount: str
     address: str
     order_id: str
     order_id_auto_generated: str
     
 class InvoiceRequest(BaseModel):
-    order_date: datetime
+    order_date: datetime = datetime.now().replace(tzinfo=None)
     order_status: str
     payment_method: str
     address: str
