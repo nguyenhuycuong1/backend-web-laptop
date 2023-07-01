@@ -19,7 +19,6 @@ class InvoiceService:
                 Cart.user_id,
                 Cart.cart_id,
                 Order.order_id,
-                Order.order_id_auto_generated
             )
             .join_from(Invoice, Order)
             .join(Cart)
