@@ -1,8 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from app.model.order import Order
+from sqlalchemy.future import select
 from app.config import db, commit_rollback
 from typing import List
-from app.schema.order import OrderBase, OrderRequest, OrderResponse, ResponseSchema
+from app.schema.order import OrderBase, OrderRequest, OrderResponse, ResponseSchema, OrderItemResponse, OrderSearchParams
 import uuid
 
 router = APIRouter(prefix="", tags=["Order"])
@@ -31,3 +32,14 @@ async def create_order(product_data: List[OrderRequest]):
         )
         for order in orders
     ]
+    
+@router.get("/order/{order_id}", response_model=List[OrderItemResponse])
+async def get_order_by_id(order_id: str):
+    query = select(Order).where(Order.order_id == order_id)
+    result = await db.session.execute(query)
+    order = result.scalars().all()
+
+    if order:
+        return order
+    else:
+        raise HTTPException(status_code=404, detail="Order not found")
