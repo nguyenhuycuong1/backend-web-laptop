@@ -18,3 +18,7 @@ class Cart(SQLModel, TimeMixin, table=True):
     product: List["Product"] = Relationship(
         back_populates="cart", link_model=CartProduct
     )
+    
+    order: List["Order"] = Relationship(
+        sa_relationship_kwargs={"uselist": True}, back_populates="cart"
+    )

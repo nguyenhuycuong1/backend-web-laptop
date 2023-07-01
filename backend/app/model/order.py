@@ -1,28 +1,28 @@
-from typing import List, Optional
-from sqlalchemy import Column, String, Float
+from typing import Optional
+from sqlalchemy import Column, String, Float, Integer
 from datetime import datetime
 from sqlmodel import SQLModel, Field, Relationship
-from sqlalchemy import ForeignKey
+from sqlmodel import ForeignKey
 import uuid
+import sqlalchemy as sa
 
+from app.model.invoice import Invoice
+
+from app.model.invoice import Invoice
 
 class Order(SQLModel, table=True):
     __tablename__ = "order"
 
-    order_id: Optional[str] = Field(
+    order_id_auto_generated: str = Field(
         default_factory=lambda: str(uuid.uuid4()), primary_key=True
     )
-    order_date: datetime = Field(default_factory=datetime.now)
-    order_status: str = Field(sa_column=Column("order_status", String))
-    payment_method: str = Field(sa_column=Column("payment", String))
-    address: str = Field(sa_column=Column("address", String))
+    order_id: str = Field(sa_column=Column("order_id", String))
+    
+    invoice: Optional[Invoice] = Relationship(back_populates="order")
+    
+    product_id: str = Field(sa_column=Column("product_id", String, unique=True))
+    quantity: int = Field(sa_column=Column("quantity", Integer))
     total_amount: float = Field(sa_column=Column("total_amount", Float))
-    user_id: str = Field(
-        sa_column=Column(
-            "user_id",
-            String,
-            ForeignKey("user.id"),
-            unique=True,
-        )
-    )
-    user: Optional["User"] = Relationship(back_populates="order")
+    
+    cart_id: Optional[str] = Field(default=None, foreign_key="cart.cart_id")
+    cart: Optional["Cart"] = Relationship(back_populates="order")

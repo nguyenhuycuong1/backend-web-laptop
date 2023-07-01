@@ -17,5 +17,3 @@ class User(SQLModel,TimeMixin,table=True):
     person: Optional["Person"] = Relationship(back_populates="user")
 
     cart: Optional["Cart"] = Relationship(back_populates="user")
-    
-    order: List["Order"] = Relationship(back_populates="user")
