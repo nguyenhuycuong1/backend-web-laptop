@@ -8,7 +8,6 @@ class OrderBase(BaseModel):
     order_id: Optional[str] = None
 
 class OrderResponse(OrderBase):
-    order_id_auto_generated: str
     order_id: str
     
 class OrderItemResponse(BaseModel):

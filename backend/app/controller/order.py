@@ -27,8 +27,7 @@ async def create_order(product_data: List[OrderRequest]):
 
     return [
         OrderResponse(
-            order_id_auto_generated=order.order_id_auto_generated,
-            order_id=order.order_id,
+            order_id=order.order_id
         )
         for order in orders
     ]
