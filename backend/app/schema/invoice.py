@@ -8,6 +8,7 @@ class InvoiceBase(BaseModel):
     invoice_id: Optional[str] = None
 
 class InvoiceResponse(InvoiceBase):
+    order_date: datetime
     order_status: str
     payment_method: str
     total_amount: float
