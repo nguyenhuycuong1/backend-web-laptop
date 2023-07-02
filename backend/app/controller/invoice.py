@@ -10,33 +10,31 @@ router = APIRouter(prefix="", tags=["Invoice"])
 
 
 
-# @router.post("/invoice", response_model=ResponseSchema)
-# async def create_invoice(product_data: InvoiceRequest):
-#     invoice = Invoice(**product_data.dict())
-#     db.session.add(invoice)
-#     await commit_rollback()
+@router.post("/invoice", response_model=ResponseSchema)
+async def create_invoice(product_data: InvoiceRequest):
+    invoice = Invoice(**product_data.dict())
+    db.session.add(invoice)
+    await commit_rollback()
 
+    await db.session.refresh(invoice)
+    return ResponseSchema(detail="Successfully fetch data!")
+
+
+# @router.post("/invoice", response_model=ResponseSchema)
+# async def create_invoice(product_data: List[InvoiceRequest]):
+#     invoices = []
+
+#     for data in product_data:
+#         invoice = Invoice(**data.dict())
+#         invoices.append(invoice)
+#         db.session.add(invoice)
+
+#     await commit_rollback()
 
 #     for invoice in invoices:
 #         await db.session.refresh(invoice)
 
 #     return ResponseSchema(detail="Successfully fetch data!")
-
-@router.post("/invoice", response_model=ResponseSchema)
-async def create_invoice(product_data: List[InvoiceRequest]):
-    invoices = []
-
-    for data in product_data:
-        invoice = Invoice(**data.dict())
-        invoices.append(invoice)
-        db.session.add(invoice)
-
-    await commit_rollback()
-    
-    for invoice in invoices:
-        await db.session.refresh(invoice)
-
-    return ResponseSchema(detail="Successfully fetch data!")
 
 
 # @router.get("/invoice/{invoice_id}", response_model=InvoiceResponse)
