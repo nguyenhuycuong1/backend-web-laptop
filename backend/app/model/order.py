@@ -23,7 +23,7 @@ class Order(SQLModel, table=True):
 
     invoice: Optional["Invoice"] = Relationship(back_populates="order")
 
-    product_id: str = Field(sa_column=Column("product_id", String, unique=True))
+    product_id: str = Field(sa_column=Column("product_id", String))
     quantity: int = Field(sa_column=Column("quantity", Integer))
 
     cart_id: Optional[str] = Field(default=None, foreign_key="cart.cart_id")

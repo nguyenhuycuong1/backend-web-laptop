@@ -4,7 +4,6 @@ from app.model.order import Order
 from app.config import db, commit_rollback
 from sqlalchemy.future import select
 from app.schema.invoice import InvoiceResponse, InvoiceRequest, ResponseSchema
-from app.service.invoice import InvoiceService
 from typing import List
 
 router = APIRouter(prefix="", tags=["Invoice"])
@@ -46,10 +45,9 @@ async def create_invoice(product_data: InvoiceRequest):
     # else:
     #     raise HTTPException(status_code=404, detail="Invoice not found")
 
-@router.get("/invoices", response_model=List[ResponseSchema], response_model_exclude_none=True)
+@router.get("/invoices", response_model=List[InvoiceResponse], response_model_exclude_none=True)
 async def get_invoices():
-    invoices = await InvoiceService.get_invoices()
-    if invoices:
-        return [{"detail": "Invoice data found!", "result": invoice} for invoice in invoices]
-    else:
-        raise HTTPException(status_code=404, detail="No invoices found")
+    query = select(Invoice)
+    result = await db.session.execute(query)
+    invoices = result.scalars().all()
+    return invoices
