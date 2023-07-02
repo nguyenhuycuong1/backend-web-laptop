@@ -56,49 +56,49 @@ async def update_from_cart(
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
-# @router.delete("/deletefromcart/{cart_id}/{product_id}")
-# async def delete_from_cart(cart_id: UUID, product_id: str):
-#     try:
-#         cartproduct = await check_existing_cart_product(str(cart_id), str(product_id))
-#         if not cartproduct:
-#             raise HTTPException(status_code=404, detail="Cart product not found")
-
-#         delete_cartproduct_query = delete(CartProduct).where(
-#             CartProduct.cart_id == str(cart_id),
-#             CartProduct.product_id == str(product_id),
-#         )
-#         await db.session.execute(delete_cartproduct_query)
-#         await commit_rollback()
-
-#         return {"message": "Cart product removed successfully"}
-#     except SQLAlchemyError as e:
-#         raise HTTPException(status_code=500, detail="Internal server error")
-
-
 @router.delete("/deletefromcart/{cart_id}/{product_id}")
-async def delete_from_cart(cart_id: UUID, product_ids: List[str]):
+async def delete_from_cart(cart_id: UUID, product_id: str):
     try:
-        for product_id in product_ids:
-            cartproduct = await check_existing_cart_product(
-                str(cart_id), str(product_id)
-            )
-            if not cartproduct:
-                raise HTTPException(
-                    status_code=404,
-                    detail=f"Cart product with product_id {product_id} not found",
-                )
+        cartproduct = await check_existing_cart_product(str(cart_id), str(product_id))
+        if not cartproduct:
+            raise HTTPException(status_code=404, detail="Cart product not found")
 
-            delete_cartproduct_query = delete(CartProduct).where(
-                CartProduct.cart_id == str(cart_id),
-                CartProduct.product_id == str(product_id),
-            )
-            await db.session.execute(delete_cartproduct_query)
-
+        delete_cartproduct_query = delete(CartProduct).where(
+            CartProduct.cart_id == str(cart_id),
+            CartProduct.product_id == str(product_id),
+        )
+        await db.session.execute(delete_cartproduct_query)
         await commit_rollback()
 
-        return {"message": "Cart products removed successfully"}
+        return {"message": "Cart product removed successfully"}
     except SQLAlchemyError as e:
         raise HTTPException(status_code=500, detail="Internal server error")
+
+
+# @router.delete("/deletefromcart/{cart_id}/{product_id}")
+# async def delete_from_cart(cart_id: UUID, product_ids: List[str]):
+#     try:
+#         for product_id in product_ids:
+#             cartproduct = await check_existing_cart_product(
+#                 str(cart_id), str(product_id)
+#             )
+#             if not cartproduct:
+#                 raise HTTPException(
+#                     status_code=404,
+#                     detail=f"Cart product with product_id {product_id} not found",
+#                 )
+
+#             delete_cartproduct_query = delete(CartProduct).where(
+#                 CartProduct.cart_id == str(cart_id),
+#                 CartProduct.product_id == str(product_id),
+#             )
+#             await db.session.execute(delete_cartproduct_query)
+
+#         await commit_rollback()
+
+#         return {"message": "Cart products removed successfully"}
+#     except SQLAlchemyError as e:
+#         raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.get("/cartByCartId/{cart_id}", response_model=List[CartProductResponse])

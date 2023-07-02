@@ -9,7 +9,7 @@ from uuid import UUID
 
 class InvoiceService:
     @staticmethod
-    async def get_invoice(invoice_id: str):
+    async def get_invoices():
         query = (
             select(
                 Invoice.order_date,
@@ -22,6 +22,6 @@ class InvoiceService:
             )
             .join_from(Invoice, Order)
             .join(Cart)
-            .where(Invoice.invoice_id == invoice_id)
         )
-        return (await db.execute(query)).mappings().one()
+        result = await db.execute(query)
+        return result.all()

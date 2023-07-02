@@ -21,7 +21,7 @@ class Invoice(SQLModel, table=True):
 
     order_date: datetime = Field(default_factory=datetime.now)
     order_status: str = Field(sa_column=Column("order_status", String))
-    payment_method: str = Field(sa_column=Column("payment", String))
+    payment_method: str = Field(sa_column=Column("payment_method", String))
     address: str = Field(sa_column=Column("address", String))
     total_amount: float = Field(sa_column=Column("total_amount", Float))
 

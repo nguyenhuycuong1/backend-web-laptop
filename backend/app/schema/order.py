@@ -21,9 +21,9 @@ class OrderRequest(BaseModel):
     quantity: int
     cart_id: str
 
-class OrderSearchParams(BaseModel):
-    order_ids: List[str]
-    order_ids_auto_generated: List[str]
+class OrderIdSearchResult(BaseModel):
+    order_id: str
+    order_id_auto_generated: str
 
 class ResponseSchema(BaseModel):
     detail: str

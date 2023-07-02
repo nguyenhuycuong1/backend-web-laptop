@@ -9,9 +9,10 @@ from app.schema.order import (
     OrderResponse,
     ResponseSchema,
     OrderItemResponse,
-    OrderSearchParams,
+    OrderIdSearchResult,
 )
 import uuid
+from sqlalchemy import distinct
 
 router = APIRouter(prefix="", tags=["Order"])
 
@@ -45,6 +46,38 @@ async def get_order_by_id(order_id: str):
         return order
     else:
         raise HTTPException(status_code=404, detail="Order not found")
+
+
+@router.get(
+    "/order_id_auto_generated/{order_id}", response_model=List[OrderIdSearchResult]
+)
+async def get_order_id_auto_generated(order_id: str):
+    subquery = (
+        select(Order.order_id, Order.order_id_auto_generated)
+        .where(Order.order_id == order_id)
+        .distinct()
+        .subquery()
+    )
+
+    query = select(subquery.c.order_id, subquery.c.order_id_auto_generated)
+    result = await db.session.execute(query)
+    rows = result.fetchall()
+
+    if not rows:
+        raise HTTPException(status_code=404, detail="Order not found")
+
+    order_id_search_results = []
+
+    for row in rows:
+        if hasattr(row, "order_id") and hasattr(row, "order_id_auto_generated"):
+            order_id_search_results.append(
+                OrderIdSearchResult(
+                    order_id=row.order_id,
+                    order_id_auto_generated=row.order_id_auto_generated,
+                )
+            )
+
+    return order_id_search_results
 
 
 @router.delete("/order/{order_id}")
