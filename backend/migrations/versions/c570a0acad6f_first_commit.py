@@ -1,8 +1,8 @@
 """first commit
 
-Revision ID: 38e330d791f3
+Revision ID: c570a0acad6f
 Revises: 
-Create Date: 2023-07-02 17:32:04.143483
+Create Date: 2023-07-02 22:12:27.106640
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision = '38e330d791f3'
+revision = 'c570a0acad6f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -87,8 +87,7 @@ def upgrade() -> None:
     sa.Column('cart_id', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.ForeignKeyConstraint(['cart_id'], ['cart.cart_id'], ),
     sa.PrimaryKeyConstraint('order_id_auto_generated'),
-    sa.UniqueConstraint('order_id_auto_generated', 'order_id', name='unique_order_id'),
-    sa.UniqueConstraint('product_id')
+    sa.UniqueConstraint('order_id_auto_generated', 'order_id', name='unique_order_id')
     )
     op.create_table('invoice',
     sa.Column('order_id_auto_generated', sa.String(), nullable=True),
@@ -97,9 +96,11 @@ def upgrade() -> None:
     sa.Column('payment_method', sa.String(), nullable=True),
     sa.Column('address', sa.String(), nullable=True),
     sa.Column('total_amount', sa.Float(), nullable=True),
+    sa.Column('user_id', sa.String(), nullable=True),
     sa.Column('invoice_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('order_date', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['order_id_auto_generated', 'order_id'], ['order.order_id_auto_generated', 'order.order_id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('invoice_id')
     )
     # ### end Alembic commands ###
