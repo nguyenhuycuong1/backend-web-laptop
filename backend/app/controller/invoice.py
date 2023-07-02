@@ -67,3 +67,17 @@ async def get_invoices_by_user_id(user_id: str):
     result = await db.session.execute(query)
     invoices = result.scalars().all()
     return invoices
+
+
+@router.delete("/invoice/{order_id}", response_model=ResponseSchema)
+async def delete_invoice_by_order_id(order_id: str):
+    query = select(Invoice).where(Invoice.order_id == order_id)
+    result = await db.session.execute(query)
+    invoice = result.scalars().first()
+
+    if invoice:
+        await db.session.delete(invoice)
+        await commit_rollback()
+        return ResponseSchema(detail="Invoice deleted successfully!")
+    else:
+        raise HTTPException(status_code=404, detail="Invoice not found")
