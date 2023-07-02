@@ -47,7 +47,7 @@ class UserService:
                 User.email,
                 User.created_at,
                 User.modified_at,
-                User.password,
+                Person.phone_number,
                 User.role,
                 Person.name,
             )
