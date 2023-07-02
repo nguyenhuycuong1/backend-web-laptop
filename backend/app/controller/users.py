@@ -40,6 +40,18 @@ async def get_all_users():
     return ResponseSchema(detail="Successfully fetched all users!", result=users)
 
 
+@router.get(
+    "/user/{user_id}", response_model=ResponseSchema, response_model_exclude_none=True
+)
+async def get_user_by_id(user_id: str):
+    query = select(User).where(User.id == user_id)
+    result = await db.session.execute(query)
+    user = result.scalars().first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return ResponseSchema(detail="Successfully fetch data!", result=user)
+
+
 @router.put("/user/{id}", response_model=ResponseSchema)
 async def update_user(id: str, user_data: UserRegisterSchema):
     query = select(User).where(User.id == id)
