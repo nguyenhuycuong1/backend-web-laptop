@@ -20,7 +20,6 @@ class InvoiceRequest(BaseModel):
     address: str
     total_amount: float
     order_id: str
-    order_id_auto_generated: str
 
 class ResponseSchema(BaseModel):
     detail: str
