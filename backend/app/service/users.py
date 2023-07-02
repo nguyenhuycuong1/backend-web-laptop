@@ -37,3 +37,21 @@ class UserService:
             Person.phone_number,
         ).join_from(User, Person)
         return (await db.execute(query)).mappings().all()
+
+    @staticmethod
+    async def get_user_by_user_id(user_id: str):
+        query = (
+            select(
+                User.id,
+                User.username,
+                User.email,
+                User.created_at,
+                User.modified_at,
+                User.password,
+                User.role,
+                Person.name,
+            )
+            .join_from(User, Person)
+            .where(User.id == user_id)
+        )
+        return (await db.execute(query)).mappings().one()

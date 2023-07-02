@@ -44,11 +44,7 @@ async def get_all_users():
     "/user/{user_id}", response_model=ResponseSchema, response_model_exclude_none=True
 )
 async def get_user_by_id(user_id: str):
-    query = select(User).where(User.id == user_id)
-    result = await db.session.execute(query)
-    user = result.scalars().first()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+    user = await UserService.get_user_by_user_id(user_id)
     return ResponseSchema(detail="Successfully fetch data!", result=user)
 
 
