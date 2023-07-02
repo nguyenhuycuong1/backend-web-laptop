@@ -47,9 +47,9 @@ class UserService:
                 User.email,
                 User.created_at,
                 User.modified_at,
-                Person.phone_number,
                 User.role,
                 Person.name,
+                Person.phone_number
             )
             .join_from(User, Person)
             .where(User.id == user_id)

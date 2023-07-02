@@ -71,6 +71,20 @@ async def get_invoices_by_user_id(user_id: str):
     return invoices
 
 
+@router.put("/invoice/{invoice_id}/address", response_model=ResponseSchema)
+async def update_invoice_address(invoice_id: str, address: str):
+    query = select(Invoice).where(Invoice.invoice_id == invoice_id)
+    result = await db.session.execute(query)
+    invoice = result.scalars().first()
+
+    if not invoice:
+        raise HTTPException(status_code=404, detail="Invoice not found")
+
+    invoice.address = address
+    await commit_rollback()
+
+    return ResponseSchema(detail="Address updated successfully!")
+
 @router.delete("/invoice/{order_id}", response_model=ResponseSchema)
 async def delete_invoice_by_order_id(order_id: str):
     query = select(Invoice).where(Invoice.order_id == order_id)
