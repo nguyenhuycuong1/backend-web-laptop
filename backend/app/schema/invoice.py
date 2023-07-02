@@ -13,6 +13,7 @@ class InvoiceResponse(InvoiceBase):
     total_amount: float
     address: str
     order_id: str
+    user_id: str
     
 class InvoiceRequest(BaseModel):
     order_status: str
@@ -20,7 +21,7 @@ class InvoiceRequest(BaseModel):
     address: str
     total_amount: float
     order_id: str
-    order_id_auto_generated: str
+    user_id: str
 
 class ResponseSchema(BaseModel):
     detail: str

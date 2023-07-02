@@ -7,21 +7,21 @@ from sqlalchemy import update
 from uuid import UUID
 
 
-class InvoiceService:
-    @staticmethod
-    async def get_invoices():
-        query = (
-            select(
-                Invoice.order_date,
-                Invoice.payment_method,
-                Invoice.address,
-                Invoice.total_amount,
-                Cart.user_id,
-                Cart.cart_id,
-                Order.order_id,
-            )
-            .join_from(Invoice, Order)
-            .join(Cart)
-        )
-        result = await db.execute(query)
-        return result.all()
+# class InvoiceService:
+#     @staticmethod
+#     async def get_invoices():
+#         query = (
+#             select(
+#                 Invoice.order_date,
+#                 Invoice.payment_method,
+#                 Invoice.address,
+#                 Invoice.total_amount,
+#                 Cart.user_id,
+#                 Cart.cart_id,
+#                 Order.order_id,
+#             )
+#             .join_from(Invoice, Order)
+#             .join(Cart)
+#         )
+#         result = await db.execute(query)
+#         return result.all()
