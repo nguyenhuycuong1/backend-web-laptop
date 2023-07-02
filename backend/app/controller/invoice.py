@@ -3,7 +3,7 @@ from app.model.invoice import Invoice
 from app.model.order import Order
 from app.config import db, commit_rollback
 from sqlalchemy.future import select
-from app.schema.invoice import InvoiceResponse, InvoiceRequest, ResponseSchema
+from app.schema.invoice import InvoiceResponse, InvoiceRequest, ResponseSchema, InvoiceAddressRequest
 from typing import List
 
 router = APIRouter(prefix="", tags=["Invoice"])
@@ -70,7 +70,7 @@ async def get_invoices_by_user_id(user_id: str):
 
 
 @router.put("/invoice/{invoice_id}/address", response_model=ResponseSchema)
-async def update_invoice_address(invoice_id: str, address: str):
+async def update_invoice_address(invoice_id: str, invoice_data: InvoiceAddressRequest):
     query = select(Invoice).where(Invoice.invoice_id == invoice_id)
     result = await db.session.execute(query)
     invoice = result.scalars().first()
@@ -78,7 +78,7 @@ async def update_invoice_address(invoice_id: str, address: str):
     if not invoice:
         raise HTTPException(status_code=404, detail="Invoice not found")
 
-    invoice.address = address
+    invoice.address = invoice_data.address
     await commit_rollback()
 
     return ResponseSchema(detail="Address updated successfully!")
