@@ -17,6 +17,7 @@ router = APIRouter(prefix="", tags=["Invoice"])
 #     await db.session.refresh(invoice)
 #     return ResponseSchema(detail="Successfully fetch data!")
 
+
 @router.post("/invoice", response_model=ResponseSchema)
 async def create_invoice(product_data: List[InvoiceRequest]):
     invoices = []
@@ -27,7 +28,7 @@ async def create_invoice(product_data: List[InvoiceRequest]):
         db.session.add(invoice)
 
     await commit_rollback()
-    
+
     for invoice in invoices:
         await db.session.refresh(invoice)
 
@@ -40,14 +41,29 @@ async def create_invoice(product_data: List[InvoiceRequest]):
 #     result = await db.session.execute(query)
 #     invoice = result.scalars()
 
-    # if invoice:
-    #     return invoice
-    # else:
-    #     raise HTTPException(status_code=404, detail="Invoice not found")
+# if invoice:
+#     return invoice
+# else:
+#     raise HTTPException(status_code=404, detail="Invoice not found")
 
-@router.get("/invoices", response_model=List[InvoiceResponse], response_model_exclude_none=True)
+
+@router.get(
+    "/invoices", response_model=List[InvoiceResponse], response_model_exclude_none=True
+)
 async def get_invoices():
     query = select(Invoice)
+    result = await db.session.execute(query)
+    invoices = result.scalars().all()
+    return invoices
+
+
+@router.get(
+    "/invoices/{user_id}",
+    response_model=List[InvoiceResponse],
+    response_model_exclude_none=True,
+)
+async def get_invoices_by_user_id(user_id: str):
+    query = select(Invoice).where(Invoice.user_id == user_id)
     result = await db.session.execute(query)
     invoices = result.scalars().all()
     return invoices
