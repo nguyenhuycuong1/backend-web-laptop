@@ -24,9 +24,9 @@ class Invoice(SQLModel, table=True):
     payment_method: str = Field(sa_column=Column("payment_method", String))
     address: str = Field(sa_column=Column("address", String))
     total_amount: float = Field(sa_column=Column("total_amount", Float))
-    user_id: str = Field(sa_column=Column("user_id", String))
+    user_id: str = Field(sa_column=Column("user_id", String, ForeignKey("user.id")))
 
-    user: Optional["User"] = Relationship(back_populates="invoice")
+    user: Optional["User"] = Relationship(back_populates="invoices")
 
     __table_args__ = (
         ForeignKeyConstraint(
