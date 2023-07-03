@@ -24,6 +24,7 @@ class InvoiceRequest(BaseModel):
     order_id: str
     user_id: str
 
+
 class InvoiceAddressRequest(BaseModel):
     address: str
     

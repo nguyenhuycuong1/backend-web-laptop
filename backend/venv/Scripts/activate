@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\Downloads\web_sell_laptop\backend\venv"
+VIRTUAL_ENV="D:\Workspace\tkhdt\backend-web-laptop\backend\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

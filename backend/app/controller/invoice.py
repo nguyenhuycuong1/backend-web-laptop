@@ -9,11 +9,13 @@ from typing import List
 router = APIRouter(prefix="", tags=["Invoice"])
 
 
+
 @router.post("/invoice", response_model=ResponseSchema)
 async def create_invoice(product_data: InvoiceRequest):
     invoice = Invoice(**product_data.dict())
     db.session.add(invoice)
     await commit_rollback()
+
     await db.session.refresh(invoice)
     return ResponseSchema(detail="Successfully fetch data!")
 
