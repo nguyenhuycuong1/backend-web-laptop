@@ -24,13 +24,10 @@ class InvoiceRequest(BaseModel):
     order_id: str
     user_id: str
 
-<<<<<<< HEAD
 
-=======
 class InvoiceAddressRequest(BaseModel):
     address: str
     
->>>>>>> bf7f40c9380f7964e74c8f4314b5746e51433c9e
 class ResponseSchema(BaseModel):
     detail: str
     result: Optional[T] = None
